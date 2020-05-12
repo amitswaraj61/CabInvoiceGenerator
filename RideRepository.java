@@ -12,8 +12,10 @@ public class RideRepository {
         this.userRides=new HashMap<>();
     }
 
-    public void addRides(String userId, Ride[] rides)
-    {
+    public void addRides(String userId, Ride[] rides) throws CabInvoiceException {
+        if(userId==null){
+            throw new CabInvoiceException("userId cant be null",CabInvoiceException.ExceptionType.USER_CANT_BE_NULL);
+        }
         ArrayList<Ride> rideList = this.userRides.get(userId);
         if(rideList == null){
             this.userRides.put(userId, new ArrayList<>(Arrays.asList(rides)));

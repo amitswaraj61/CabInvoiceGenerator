@@ -6,10 +6,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class InvoiceServiceTest {
-    InvoiceService invoiceService=null;
+    InvoiceService invoiceService = null;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         invoiceService = new InvoiceService();
     }
 
@@ -42,16 +42,38 @@ public class InvoiceServiceTest {
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30);
         assertEquals(expectedInvoiceSummary, summary);
     }
+
     @Test
-    public void givenUserIdAndRides_ShouldReturnInvoiceSummary(){
-        String userId="a@b.com";
+    public void givenUserIdAndRides_ShouldReturnInvoiceSummary() throws CabInvoiceException {
+        String userId = "a@b.com";
         Ride[] rides = {
                 new Ride(2.0, 5),
                 new Ride(0.1, 1)
         };
-        invoiceService.addRides(userId,rides);
+        invoiceService.addRides(userId, rides);
         InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
-        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2,30);
-        assertEquals(expectedInvoiceSummary,summary);
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30);
+        assertEquals(expectedInvoiceSummary, summary);
+    }
+
+    @Test
+    public void givenInputWithoutUserId_WhenCalculated_ShouldReturnCustomException() throws CabInvoiceException {
+        String userId = null;
+        Ride[] rides = {
+                new Ride(2.0, 5),
+                new Ride(0.1, 1)
+        };
+        try {
+            invoiceService.addRides(userId, rides);
+            InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
+        } catch (CabInvoiceException exception) {
+            assertEquals("userId cant be null", exception.getMessage());
+        }
     }
 }
+
+
+
+
+
+

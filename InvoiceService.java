@@ -24,11 +24,12 @@ public class InvoiceService {
         }
         return new InvoiceSummary(rides.length,totalFare);
     }
-    public void addRides(String userId,Ride[] rides){
-        rideRepository.addRides(userId,rides);
+    public void addRides(String userId,Ride[] rides) throws CabInvoiceException {
+        rideRepository.addRides(userId, rides);
     }
 
     public InvoiceSummary getInvoiceSummary(String userId) {
+
         return this.calculateFare(rideRepository.getRides(userId));
     }
 }
