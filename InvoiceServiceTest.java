@@ -18,7 +18,7 @@ public class InvoiceServiceTest {
         InvoiceService invoiceService = new InvoiceService();
         double distance = 2.0;
         int time = 5;
-        double fare = invoiceService.calculateFare(distance,time, Ride.RideType.Normal);
+        double fare = invoiceService.calculateFare(distance,time, CabRide.NORMAL);
         assertEquals(25, fare, 0.0);
     }
 
@@ -27,7 +27,7 @@ public class InvoiceServiceTest {
         InvoiceService invoiceService = new InvoiceService();
         double distance = 0.1;
         int time = 1;
-        double fare = invoiceService.calculateFare(distance,time, Ride.RideType.Normal);
+        double fare = invoiceService.calculateFare(distance,time, CabRide.NORMAL);
         assertEquals(5, fare, 0.0);
     }
 
@@ -35,8 +35,8 @@ public class InvoiceServiceTest {
     public void givenMultipleRides_ShouldReturnInvoiceSummary() {
         InvoiceService invoiceService = new InvoiceService();
         Ride[] rides = {
-                new Ride(2.0, 5, Ride.RideType.Normal),
-                new Ride(0.1, 1, Ride.RideType.Normal)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL)
         };
         InvoiceSummary summary = invoiceService.calculateFare(rides);
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30);
@@ -47,8 +47,8 @@ public class InvoiceServiceTest {
     public void givenUserIdAndRides_ShouldReturnInvoiceSummary() throws CabInvoiceException {
         String userId = "a@b.com";
         Ride[] rides = {
-                new Ride(2.0, 5, Ride.RideType.Normal),
-                new Ride(0.1, 1, Ride.RideType.Normal)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL)
         };
         invoiceService.addRides(userId, rides);
         InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
@@ -60,8 +60,8 @@ public class InvoiceServiceTest {
     public void givenInputWithoutUserId_WhenCalculated_ShouldReturnCustomException()  {
         String userId = null;
         Ride[] rides = {
-                new Ride(2.0, 5, Ride.RideType.Normal),
-                new Ride(0.1, 1, Ride.RideType.Normal)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL)
         };
         try {
             invoiceService.addRides(userId, rides);
@@ -74,13 +74,13 @@ public class InvoiceServiceTest {
     public void givenMultipleRidesArrays_ShouldReturnInvoiceSummary() throws CabInvoiceException{
         String userId = "amit.com";
         Ride[] rides = {
-                new Ride(2.0, 5, Ride.RideType.Normal),
-                new Ride(0.1, 1, Ride.RideType.Normal)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL)
         };
         invoiceService.addRides(userId, rides);
         Ride[] rides1 = {
-                new Ride(2.0, 5, Ride.RideType.Normal),
-                new Ride(0.1, 1, Ride.RideType.Normal)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL)
         };
         invoiceService.addRides(userId, rides1);
         InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
@@ -93,18 +93,18 @@ public class InvoiceServiceTest {
         String userId = "amit.com";
         String userId1="amy.com";
         Ride[] rides = {
-                new Ride(2.0, 5, Ride.RideType.Normal),
-                new Ride(0.1, 1, Ride.RideType.Normal)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL)
         };
         invoiceService.addRides(userId, rides);
         Ride[] rides1 = {
-                new Ride(2.0, 5, Ride.RideType.Normal),
-                new Ride(0.1, 1, Ride.RideType.Normal)
+                new Ride(2.0, 5, CabRide.NORMAL),
+                new Ride(0.1, 1, CabRide.NORMAL)
         };
         invoiceService.addRides(userId, rides1);
         Ride[] rides2 = {
-                new Ride(3.0, 5, Ride.RideType.Normal),
-                new Ride(0.2, 1, Ride.RideType.Normal)
+                new Ride(3.0, 5, CabRide.NORMAL),
+                new Ride(0.2, 1, CabRide.NORMAL)
         };
         invoiceService.addRides(userId1,rides2);
         InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
@@ -116,8 +116,8 @@ public class InvoiceServiceTest {
         String userId = "amit.com";
         String userId1="amy.com";
         Ride[] rides = {
-                new Ride(2.0,5.0, Ride.RideType.Normal),
-                new Ride(0.1,1.0, Ride.RideType.Premium)
+                new Ride(2.0,5.0, CabRide.NORMAL),
+                new Ride(0.1,1.0, CabRide.PREMIUM)
         };
         invoiceService.addRides(userId, rides);
         InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
