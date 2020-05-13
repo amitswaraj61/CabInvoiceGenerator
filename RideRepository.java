@@ -8,21 +8,20 @@ import java.util.Map;
 public class RideRepository {
     Map<String, ArrayList<Ride>> userRides = null;
 
-    public RideRepository(){
-        this.userRides=new HashMap<>();
+    public RideRepository() {
+        this.userRides = new HashMap<>();
     }
 
-    public void addRides(String userId, Ride[] rides) throws CabInvoiceException {
-        if(userId==null){
-            throw new CabInvoiceException("userId cant be null",CabInvoiceException.ExceptionType.USER_CANT_BE_NULL);
+    public void addRides(String userId, Ride[] rides) {
+        boolean checkRide = userRides.containsKey(userId);
+        ArrayList<Ride> list= new ArrayList<Ride>();
+        if(checkRide == false){
+            list.addAll(Arrays.asList(rides));
+            this.userRides.put(userId,new ArrayList<>(Arrays.asList(rides)));
         }
-        ArrayList<Ride> rideList = this.userRides.get(userId);
-        if(rideList == null){
-            this.userRides.put(userId, new ArrayList<>(Arrays.asList(rides)));
-        }
+        else for(Ride ride : rides) userRides.get(userId).add(ride);
     }
-
-    public Ride[] getRides(String userId){
+    public Ride[] getRides(String userId) {
         return this.userRides.get(userId).toArray(new Ride[0]);
     }
 }
