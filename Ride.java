@@ -1,15 +1,16 @@
 package cabInvoice;
 
-import java.util.ArrayList;
-
-public class Ride extends ArrayList<Ride> {
-    public double distance;
-    public double time;
-    public CabRide cabRide;
+public class Ride {
+    private double distance;
+    private double time;
+    private CabRide cabRide;
 
     public Ride(double distance, double time, CabRide cabRide) {
         this.distance = distance;
         this.time = time;
         this.cabRide = cabRide;
+    }
+    public double calcCostOfCabRide() {
+        return cabRide.calcCostOfCabRide(distance, time);
     }
 }
